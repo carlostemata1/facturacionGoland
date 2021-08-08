@@ -3,8 +3,6 @@ package main
 import (
 	"database/sql"
 	"net/http"
-
-	//"log"
 	"fmt"
 	"strconv"
 	"text/template"
@@ -174,36 +172,6 @@ func InsertarPromocion(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err.Error())
 		}
-
-		//-------------------compobar que no este la fecha -----------------------------
-		obtenerRegistros, err := conexionEstablecida.Query("SELECT * FROM promocion")
-		if err != nil {
-			panic(err.Error())
-		}
-		promocion := PromocionV{}
-		arregloPromocion := []PromocionV{}
-
-		for obtenerRegistros.Next() {
-			var idV int
-			var descripcionV string
-			var porcentajeV float64
-			var fecha_inicioV string
-			var fecha_finV string
-			err = obtenerRegistros.Scan(&idV, &descripcionV, &porcentajeV, &fecha_inicioV, &fecha_finV)
-			if err != nil {
-				panic(err.Error())
-			}
-			promocion.IdV = idV
-			promocion.DescripcionV = descripcionV
-			promocion.PorcentajeV = porcentajeV
-			promocion.Fecha_inicioV = fecha_inicioV
-			promocion.Fecha_finV = fecha_finV
-
-			arregloPromocion = append(arregloPromocion, promocion)
-			fmt.Print(fecha_inicioV, fecha_finV, sePuede)
-		}
-
-		//-------------------compobar que no este la fecha -----------------------------
 		if sePuede {
 			insertarMedicamento.Exec(descripcion, porcentaje, fecha_inicio, fecha_fin)
 			http.Redirect(w, r, "/promociones", 301)
