@@ -6,6 +6,7 @@ import (
 
 	//"log"
 	"fmt"
+	"strconv"
 	"text/template"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -36,6 +37,10 @@ func main() {
 	http.HandleFunc("/facturas", ListarFacturas)
 	http.HandleFunc("/crearFactura", CrearFactura)
 	http.HandleFunc("/insertarFactura", InsertarFactura)
+	http.HandleFunc("/simulador", Simulador)
+	http.HandleFunc("/reporte", Reporte)
+	http.HandleFunc("/generarReporte", GenerarReporte)
+
 	fmt.Println("servidor corriendo")
 	http.ListenAndServe(":8000", nil)
 }
@@ -152,11 +157,19 @@ func CrearPromocion(w http.ResponseWriter, r *http.Request) {
 
 func InsertarPromocion(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		sePuede := false
 		descripcion := r.FormValue("descripcion")
 		porcentaje := r.FormValue("porcentaje")
 		fecha_inicio := r.FormValue("fecha_inicio")
 		fecha_fin := r.FormValue("fecha_fin")
 		conexionEstablecida := conexionBD()
+		i1, err := strconv.Atoi(porcentaje)
+		if err == nil {
+			fmt.Println(i1)
+		}
+		if i1 < 70 {
+			sePuede = true
+		}
 		insertarMedicamento, err := conexionEstablecida.Prepare("INSERT INTO promocion (descipcion, porcentaje, fecha_inicio, fecha_fin) VALUES (?, ?, ?,?);")
 		if err != nil {
 			panic(err.Error())
@@ -169,8 +182,6 @@ func InsertarPromocion(w http.ResponseWriter, r *http.Request) {
 		}
 		promocion := PromocionV{}
 		arregloPromocion := []PromocionV{}
-
-		sePuede := true
 
 		for obtenerRegistros.Next() {
 			var idV int
@@ -193,8 +204,12 @@ func InsertarPromocion(w http.ResponseWriter, r *http.Request) {
 		}
 
 		//-------------------compobar que no este la fecha -----------------------------
-		insertarMedicamento.Exec(descripcion, porcentaje, fecha_inicio, fecha_fin)
-		http.Redirect(w, r, "/promociones", 301)
+		if sePuede {
+			insertarMedicamento.Exec(descripcion, porcentaje, fecha_inicio, fecha_fin)
+			http.Redirect(w, r, "/promociones", 301)
+		} else {
+			plantillas.ExecuteTemplate(w, "crearPromocion", nil)
+		}
 	}
 }
 
@@ -247,5 +262,34 @@ func InsertarFactura(w http.ResponseWriter, r *http.Request) {
 		}
 		insertarFactura.Exec(fecha_crear, pago_total)
 		http.Redirect(w, r, "/facturas", 301)
+	}
+}
+
+//------------------------------
+
+func Simulador(w http.ResponseWriter, r *http.Request) {
+	plantillas.ExecuteTemplate(w, "simulador", nil)
+}
+
+//----------------------------------------------- parte reporte ---------------
+func Reporte(w http.ResponseWriter, r *http.Request) {
+	plantillas.ExecuteTemplate(w, "reporte", nil)
+}
+
+
+func GenerarReporte(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		fecha_inicio := r.FormValue("fecha_inicio")
+		fecha_fin := r.FormValue("pago_final")
+		//conexionEstablecida := conexionBD()
+		//insertarFactura, err := conexionEstablecida.Prepare("INSERT INTO Factura (fecha_crear, pago_total) VALUES (?, ?);")
+		//if err != nil {
+		//	panic(err.Error())
+		//}
+		//insertarFactura.Exec(fecha_crear, pago_total)
+		fmt.Print(fecha_inicio)
+		fmt.Print(fecha_fin)
+		plantillas.ExecuteTemplate(w, "generarReporte", nil)
+
 	}
 }

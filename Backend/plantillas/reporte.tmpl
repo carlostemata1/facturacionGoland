@@ -1,0 +1,26 @@
+{{define "reporte"}}
+{{template "cabecera"}} 
+<div class="card">
+    <div class="card-header">   GENERADOR DE REPORTE      </div>
+    <div class="card-body">
+        <form method = "post" action="/generarReporte">
+          <div class="form-group">
+            <label for="">INGRESE LA FECHA DE INICIO:</label>
+            <input type="date"
+              class="form-control" name="fecha_inicio" id="fecha_inicio" aria-describedby="helpId" placeholder="digite la fecha de inicio">
+            <small id="helpId" class="form-text text-muted">fecha inicio</small>
+          </div>
+          <div class="form-group">
+            <label for="">INGRESE LA FECHA FINAL :</label>
+            <input type="date"
+              class="form-control" name="fecha_fin" id="fecha_fin" aria-describedby="helpId" placeholder="digite la fecha de finalizacion">
+            <small id="helpId" class="form-text text-muted">fecha final</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">OBTENER REPORTE</button>
+
+        </form>
+    </div>
+</div>
+{{template "pie"}}
+{{end}}

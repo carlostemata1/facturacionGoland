@@ -31,20 +31,41 @@ func Atoi(s string) int {
 func main() {
 	IniV := "2021-02-12"
 	finV := "2021-03-12"
-	IniV := "2021-02-12"
-	finV := "2021-03-12"
+	Ini := "2021-02-12"
+	fin := "2021-03-12"
 
 	dia1 := Atoi(IniV[8:])
 	mes1 := Atoi(IniV[5:7])
 	dia1f := Atoi(finV[8:])
 	mes1f := Atoi(finV[5:7])
-	dia2 := Atoi(Ini[8:])
-	mes2 := Atoi(Ini[5:7])
-	dia2f := Atoi(fin[8:])
-	mes2f := Atoi(fin[5:7])
+	dia := Atoi(Ini[8:])
+	mes := Atoi(Ini[5:7])
+	diaf := Atoi(fin[8:])
+	mesf := Atoi(fin[5:7])
 
+
+	if mes1f <=  mes {
+		fmt.Print()
+	}
+
+	
+	fmt.Print(dia1)
+	fmt.Print("   ")
+	fmt.Println(mes1)
+
+	fmt.Print(dia1f)
+	fmt.Print("   ")
+	fmt.Println(mes1f)
+
+	
 	fmt.Print(dia)
+	fmt.Print("   ")
+	fmt.Println(mes)
 
-	fmt.Print(mes)
+	fmt.Print(diaf)
+	fmt.Print("   ")
+	fmt.Println(mesf)
+
+	
 
 }
