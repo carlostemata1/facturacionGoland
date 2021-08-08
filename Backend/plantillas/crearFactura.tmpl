@@ -1,0 +1,28 @@
+{{define "crearFactura"}}
+{{template "cabecera"}}
+<div class="card">
+    <div class="card-header">    FACTURAS      </div>
+    <div class="card-body">
+        <form method = "post" action="/insertarFactura">
+          <div class="form-group">
+            <label for="">fecha de creacion:</label>
+            <input type="date"
+              class="form-control" name="fecha_crear" id="fecha_crear" aria-describedby="helpId" placeholder="digite la fecha de creacion">
+            <small id="helpId" class="form-text text-muted">dia de creacion de la factura</small>
+          </div>
+          <div class="form-group">
+            <label for="">total :</label>
+            <input type="double"
+              class="form-control" name="pago_total" id="pago_total" aria-describedby="helpId" placeholder="digite total de la venta">
+            <small id="helpId" class="form-text text-muted">precio total de la factura</small>
+          </div>
+          
+
+          <button type="submit" class="btn btn-primary">Agregar factura</button>
+
+        </form>
+    </div>
+</div>
+
+{{template "pie"}}
+{{end}}

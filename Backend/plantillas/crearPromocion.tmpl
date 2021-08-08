@@ -1,0 +1,40 @@
+{{define "crearPromocion"}}
+{{template "cabecera"}}
+<div class="card">
+    <div class="card-header">    PROMOCIONES      </div>
+    <div class="card-body">
+        <form method = "post" action="/insertarPromocion">
+          <div class="form-group">
+            <label for="">Descipcion :</label>
+            <input type="text"
+              class="form-control" name="descripcion" id="descripcion" aria-describedby="helpId" placeholder="digite el nombre del Medicamento">
+            <small id="helpId" class="form-text text-muted">describa la promocion</small>
+          </div>
+          <div class="form-group">
+            <label for="">Porcentaje :</label>
+            <input type="double"
+              class="form-control" name="porcentaje" id="porcentaje" aria-describedby="helpId" placeholder="digite el nombre del Medicamento">
+            <small id="helpId" class="form-text text-muted">porcentaje</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="">fecha de inicio:</label>
+            <input type="date"
+              class="form-control" name="fecha_inicio" id="fecha_inicio" aria-describedby="helpId" placeholder="digite la fecha de inicio">
+            <small id="helpId" class="form-text text-muted">fecha inicio</small>
+          </div>
+          <div class="form-group">
+            <label for="">fecha de finalizacion :</label>
+            <input type="date"
+              class="form-control" name="fecha_fin" id="fecha_fin" aria-describedby="helpId" placeholder="digite la fecha de finalizacion">
+            <small id="helpId" class="form-text text-muted">fecha final</small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Agregar Promocion</button>
+
+        </form>
+    </div>
+</div>
+
+{{template "pie"}}
+{{end}}
